@@ -1,0 +1,118 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+<style>
+    .result-container {
+        padding: 40px;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+
+    .result-container h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #2d2d2d;
+    }
+
+    .ingredients-box {
+        background-color: #ffffff;
+        padding: 15px 25px;
+        border-radius: 10px;
+        display: inline-block;
+        font-size: 16px;
+        color: #333;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+
+    .recipe-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .recipe-card {
+        background-color: #ffffff;
+        width: 280px;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease;
+        text-align: left;
+    }
+
+    .recipe-card:hover {
+        transform: scale(1.03);
+    }
+
+    .recipe-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0c4f60;
+        margin-bottom: 10px;
+    }
+
+    .recipe-ingredients,
+    .recipe-instructions {
+        font-size: 14px;
+        color: #444;
+        margin-bottom: 10px;
+    }
+
+    .no-results {
+        font-size: 18px;
+        color: #999;
+        margin-top: 30px;
+    }
+
+    .back-link {
+        margin-top: 30px;
+        display: inline-block;
+        font-size: 16px;
+        text-decoration: none;
+        color: #0c4f60;
+        font-weight: bold;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="result-container">
+    <h2>AI-Powered Recipe Suggestions</h2>
+
+    {% if ingredients %}
+        <div class="ingredients-box">
+            <strong>Your Ingredients:</strong> {{ ingredients }}
+        </div>
+    {% endif %}
+
+    {% if recipes %}
+        <div class="recipe-list">
+            {% for recipe in recipes %}
+                <div class="recipe-card">
+                    <div class="recipe-title">{{ recipe.title }}</div>
+                    <div><strong>Match Score:</strong> {{ recipe.score }}</div>
+                    <div class="recipe-ingredients">
+                        <strong>Ingredients:</strong> {{ recipe.ingredients }}
+                    </div>
+                    <div class="recipe-instructions">
+                        <strong>Instructions:</strong> {{ recipe.instructions }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        {% if error %}
+            <div class="no-results">{{ error }}</div>
+        {% else %}
+            <div class="no-results">😓 Sorry, no recipes found for those ingredients.</div>
+        {% endif %}
+    {% endif %}
+
+    <a class="back-link" href="{% url 'home' %}">← Back to Home</a>
+</div>
+{% endblock %}

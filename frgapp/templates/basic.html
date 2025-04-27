@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FRG - AI Recipe Generator</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; }
+        header {
+            background: linear-gradient(to right,rgb(68, 8, 159),rgb(5, 240, 111));
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 36px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background-color: black;
+            color: var(--footer-text-color, white);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body style="--footer-text-color: {{ footer_color|default:'white' }};">
+
+    <header>
+        <h1>FRG</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Get Started</a>
+            <a href="#">Links</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        &copy; 2025 FRG. All rights reserved.
+    </footer>
+</body>
+</html>

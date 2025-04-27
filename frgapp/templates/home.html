@@ -1,0 +1,249 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+<style>
+    .home-container {
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+    }
+    .intro-text {
+        max-width: 50%;
+    }
+    .intro-text h2 {
+        font-size: 28px;
+    }
+    .intro-text p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    .intro-gif img {
+        max-width: 400px;
+        border-radius: 20px;
+        animation: float 3s ease-in-out infinite;
+    }
+    .search-section {
+        margin: 40px;
+        text-align: center;
+    }
+    .search-bar {
+        width: 70%;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    }
+    .search-bar:focus {
+        outline: none;
+        border-color: #feb47b;
+    }
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 60px;
+    }
+    .action-buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        background-color:rgb(8, 104, 126);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: transform 0.2s ease;
+    }
+    .action-buttons button:hover {
+        transform: scale(1.05);
+    }
+    .gallery {
+        overflow-x: scroll;
+        display: flex;
+        gap: 20px;
+        padding: 30px 20px;
+    }
+    .card {
+        min-width: 200px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        background-color: white;
+        text-align: center;
+    }
+    .card:hover {
+        transform: scale(1.05);
+    }
+    .card img {
+        width: 100%;
+        border-radius: 15px 15px 0 0;
+    }
+    .svg1 { top: 15%; left: 5%; }         
+    .svg2 { top: 25%; right: 10%; }       
+    .svg3 { bottom: 15%; left: 2%; }      
+    .svg4 { bottom: 5%; right: 5%; }     
+    .svg5 { top: 50%; left: 45%; }        
+    
+    .floating-svg {
+        position: absolute;
+        animation: float 4s ease-in-out infinite;
+        z-index: 1;
+        pointer-events: none; /* So they don’t interfere with clicks */
+    }
+    
+    @keyframes float {
+        0%   { transform: translateY(0px); }
+        50%  { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+</style>
+
+<div class="home-container">
+    <div class="intro-text">
+        <h2>Welcome to FRG</h2>
+        <p>
+            Tired of wondering what to cook with the ingredients you have? 
+            <strong>FRG</strong> is your AI-powered food companion. Just tell us what you’ve got in your kitchen,
+            and we’ll instantly suggest delicious, creative recipes tailored just for you!
+        </p>
+    </div>
+    <div class="intro-gif">
+        <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Cooking GIF">
+    </div>
+</div>
+
+<div class="search-section">
+    <form method="POST" action="{% url 'result' %}">
+        {% csrf_token %}
+        <input class="search-bar" type="text" name="ingredients" placeholder="Add ingredients like tomato, onion, garlic" required>
+        <div class="action-buttons">
+            <button type="submit">
+                <svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="white"/></svg>
+                Submit
+            </button>
+            <button type="button">
+                <svg width="16" height="16"><rect width="12" height="12" fill="white"/></svg>
+                Filter
+            </button>
+        </div>
+    </form>
+</div>
+
+{% load static %}
+<div class="gallery">
+    <div class="card">
+        <img src="{% static 'images/biryani.png' %}" alt="Biryani">
+        <p>Spicy Biryani</p>
+    </div>
+    <div class="card">
+        <img src="{% static 'images/pasta.png' %}" alt="Pasta">
+        <p>Cheesy Pasta</p>
+    </div>
+    <div class="card">
+        <img src="{% static 'images/pizza.png' %}" alt="Pizza">
+        <p>Loaded Pizza</p>
+    </div>
+</div>
+
+<!-- Floating SVGs -->
+<svg class="floating-svg svg1" width="50" height="50" viewBox="0 0 64 64">
+    <rect y="25" width="64" height="14" rx="5" fill="#ffcc4d"/>
+    <rect y="15" width="64" height="10" rx="5" fill="#d99e82"/>
+    <rect y="39" width="64" height="10" rx="5" fill="#a8795d"/>
+</svg>
+
+<svg class="floating-svg svg2" width="50" height="50" viewBox="0 0 64 64">
+    <path d="M2,2 L62,32 L2,62 Z" fill="#fcbf49"/>
+    <circle cx="20" cy="20" r="3" fill="#d62828"/>
+    <circle cx="35" cy="30" r="3" fill="#d62828"/>
+    <circle cx="20" cy="45" r="3" fill="#d62828"/>
+</svg>
+
+<svg class="floating-svg svg3" width="50" height="50" viewBox="0 0 64 64">
+    <rect x="20" y="20" width="24" height="30" rx="4" fill="#89c2d9"/>
+    <rect x="28" y="10" width="4" height="10" fill="#2a9d8f"/>
+    <rect x="32" y="10" width="2" height="10" fill="#2a9d8f"/>
+</svg>
+
+<svg class="floating-svg svg4" width="50" height="50" viewBox="0 0 64 64">
+    <path d="M20 10 Q22 18, 20 26 Q18 18, 20 10 Z" fill="#adb5bd"/>
+    <rect x="19" y="26" width="2" height="20" fill="#495057"/>
+    <rect x="30" y="10" width="2" height="36" fill="#adb5bd"/>
+    <line x1="28" y1="16" x2="34" y2="16" stroke="#495057" stroke-width="1"/>
+    <line x1="28" y1="20" x2="34" y2="20" stroke="#495057" stroke-width="1"/>
+</svg>
+
+<svg class="floating-svg svg5" width="50" height="50" viewBox="0 0 64 64">
+    <circle cx="30" cy="30" r="18" fill="#495057"/>
+    <circle cx="30" cy="30" r="12" fill="#adb5bd"/>
+    <rect x="45" y="28" width="15" height="4" fill="#6c757d"/>
+</svg>
+
+<script>
+    window.addEventListener("load", () => {
+        // Animate the header
+        gsap.from("header", {
+            y: -100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        // Animate intro text
+        gsap.from(".intro-text", {
+            x: -100,
+            opacity: 0,
+            delay: 0.5,
+            duration: 1
+        });
+
+        // Animate the gif
+        gsap.from(".intro-gif", {
+            x: 100,
+            opacity: 0,
+            delay: 0.6,
+            duration: 1
+        });
+
+        // Animate the search bar
+        gsap.from(".search-bar", {
+            scale: 0.8,
+            opacity: 0,
+            delay: 0.8,
+            duration: 0.8
+        });
+
+        // Animate the buttons
+        gsap.from(".action-buttons button", {
+            y: 30,
+            opacity: 0,
+            stagger: 0.2,
+            delay: 1.2,
+            duration: 0.6
+        });
+
+        // Animate gallery cards one by one
+        gsap.from(".card", {
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            delay: 1.5,
+            duration: 0.8
+        });
+
+        // Floating SVGs animation
+        gsap.to(".floating-svg", {
+            y: "-=20",
+            repeat: -1,
+            yoyo: true,
+            duration: 2,
+            ease: "sine.inOut"
+        });
+    });
+</script>
+
+{% endblock %}
